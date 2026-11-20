@@ -10,7 +10,7 @@
 */
 window.ONDERZOEK = {
   voorbeeld: true,
-  voorbeeldTekst: "Voorbeeldversie: welke meting nu open is, de sluitdatum, de stand per markt, de link naar de vragenlijst en de voorbereidingslink zijn nog niet echt.",
+  voorbeeldTekst: "Voorbeeldversie: de sluitdatum, de stand per markt, de link naar de vragenlijst en de voorbereidingslink zijn nog niet echt.",
 
   naam: "Serviceproviders-onderzoek",
   editie: "2026 · meting 3",
