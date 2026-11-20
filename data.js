@@ -28,7 +28,7 @@ window.ONDERZOEK = {
   metingen: [
     // samenvattingUrl is optioneel: link naar de samenvatting van die meting.
     { naam: "Meting 1", periode: "voorjaar", thema: "Binnendienst en acceptatie", status: "afgerond", samenvattingUrl: "https://www.dfobv.nl/wp-content/uploads/2026/06/Vakpaper-Serviceproviders-2026-meting-1.pdf" },
-    { naam: "Meting 2", periode: "zomer", thema: "Marktgerichtheid", status: "afgerond" },
+    { naam: "Meting 2", periode: "zomer", thema: "Marktgerichtheid", status: "afgerond", samenvattingUrl: "samenvattingen/2026-meting-2.pdf" },
     { naam: "Meting 3", periode: "najaar", thema: "Bedrijfsvoering", status: "open" }
   ],
   metingenIntro: "Vanaf 2026 drie metingen, elk met een eigen thema. Per markt wordt de best beoordeelde serviceprovider bekendgemaakt.",
@@ -116,51 +116,54 @@ window.ONDERZOEK = {
   },
 
   // Teasers: grafieken uit het onderzoek. Alleen cijfers per markt, nooit per serviceprovider.
-  // Alle cijfers hieronder komen uit de openbare persberichten en de vakpaper van meting 1.
+  // Alle cijfers hieronder komen uit de vakpaper van meting 2 (oktober 2026).
   // soort "paar": twee punten per rij (a en b). soort "staven": één waarde per rij.
   inzichten: [
     {
       kop: "Kleinere serviceproviders worden hoger gewaardeerd",
-      uitleg: "Gemiddelde waardering van grote en kleine serviceproviders op marktgerichtheid. Schaal 1 tot 10.",
-      bron: "Meting 2, 2026: marktgerichtheid (persbericht 15 oktober 2026)",
+      uitleg: "Gewogen score van grote en kleine serviceproviders op marktgerichtheid. Schaal 1 tot 10.",
+      bron: "Meting 2, 2026: marktgerichtheid",
       soort: "paar",
       domein: [5, 9], ticks: [5, 6, 7, 8, 9], decimalen: 1,
       reeksA: { naam: "Grote serviceproviders", kleur: "#4F95CF", open: true },
       reeksB: { naam: "Kleine serviceproviders", kleur: "#005EA9", open: false },
       verschil: true,
       rijen: [
-        { label: "Zakelijke schade", a: 6.9, b: 8.5 },
-        { label: "Particuliere schade", a: 6.7, b: 7.8 }
-      ]
+        { label: "Zakelijke schade", a: 6.86, b: 8.52 },
+        { label: "Particuliere schade", a: 6.66, b: 7.81 }
+      ],
+      noot: "In hypotheken haalde geen kleine serviceprovider genoeg beoordelingen."
     },
     {
-      kop: "Hypotheekadviseurs zijn het kritischst",
-      uitleg: "Gemiddelde waardering van de serviceproviders op marktgerichtheid, per markt. Schaal 1 tot 10.",
-      bron: "Meting 2, 2026: marktgerichtheid (persbericht 15 oktober 2026)",
+      kop: "Een vaste hoofdpartner levert een beter oordeel op",
+      uitleg: "Gewogen score die kantoren hun serviceprovider geven, naar hoe ze samenwerken binnen een markt. Schaal 1 tot 10.",
+      bron: "Meting 2, 2026: marktgerichtheid",
       soort: "staven",
       domein: [0, 10], ticks: [0, 2, 4, 6, 8, 10], decimalen: 1,
       kleur: "#005EA9",
       rijen: [
-        { label: "Zakelijke schade", waarde: 7.15 },
-        { label: "Particuliere schade", waarde: 6.96 },
-        { label: "Hypotheken", waarde: 6.52 }
+        { label: "Eén serviceprovider", waarde: 7.40 },
+        { label: "Meerdere naast elkaar", waarde: 6.60 },
+        { label: "Meer dan 50% van omzet", waarde: 7.37 },
+        { label: "Tot 50% van omzet", waarde: 5.98 }
       ]
     },
     {
-      kop: "Bereikbaarheid en snelheid wegen het zwaarst",
-      uitleg: "Hoe belangrijk adviseurs elk aspect van de binnendienst en acceptatie vinden. Schaal 1 tot 10.",
-      bron: "Meting 1, 2026: binnendienst en acceptatie (vakpaper juni 2026)",
+      kop: "Aanbod op maat en meedenken wegen het zwaarst",
+      uitleg: "Hoe belangrijk adviseurs elk onderwerp van marktgerichtheid vinden. Schaal 1 tot 10.",
+      bron: "Meting 2, 2026: marktgerichtheid",
       soort: "staven",
       domein: [0, 10], ticks: [0, 2, 4, 6, 8, 10], decimalen: 1,
       kleur: "#005EA9",
       rijen: [
-        { label: "Bereikbaarheid", waarde: 8.82 },
-        { label: "Doorlooptijd acceptatie", waarde: 8.76 },
-        { label: "Snelheid antwoorden", waarde: 8.62 },
-        { label: "Maatwerk", waarde: 8.58 },
-        { label: "Duidelijke criteria", waarde: 8.57 },
-        { label: "Innovatieve producten", waarde: 8.05 },
-        { label: "Vast aanspreekpunt", waarde: 7.81 }
+        { label: "Aanbod op maat", waarde: 8.69 },
+        { label: "Meedenken", waarde: 8.30 },
+        { label: "Digitale middelen", waarde: 8.30 },
+        { label: "Waarde vs. kosten", waarde: 8.27 },
+        { label: "Toekomstgerichtheid", waarde: 8.07 },
+        { label: "Proactief informeren", waarde: 7.63 },
+        { label: "Inkoopvoordelen", waarde: 7.60 },
+        { label: "Betrekken bij koers", waarde: 7.25 }
       ]
     }
   ],
@@ -174,14 +177,13 @@ window.ONDERZOEK = {
     {
       jaar: "2026 · meting 2",
       kerncijfers: [
-        { waarde: "1.018", label: "beoordelingen door advieskantoren" },
-        { waarde: "40", label: "serviceproviders en franchiseorganisaties" }
+        { waarde: "1.014", label: "beoordelingen door advieskantoren" },
+        { waarde: "3,3", label: "serviceproviders per kantoor, gemiddeld" }
       ],
       // Link naar de samenvatting (pdf of webpagina). Leeg laten = geen downloadknop.
-      samenvattingUrl: "",
-      noot: "De samenvatting van deze meting volgt binnenkort.",
+      samenvattingUrl: "samenvattingen/2026-meting-2.pdf",
       kernbevinding:
-        "Meedenken met het kantoor bepaalt hoe adviseurs een serviceprovider waarderen en of ze die aanbevelen. Op alle acht aspecten van marktgerichtheid blijft de waardering achter bij wat adviseurs belangrijk vinden; bij meedenken is het verschil het grootst.",
+        "Meedenken met het kantoor bepaalt het sterkst of adviseurs een serviceprovider aanbevelen, en juist daar schiet de markt tekort. Op geen van de acht onderwerpen haalt het gemiddelde wat adviseurs verwachten. Kantoren die per markt met één vaste partner werken, zijn duidelijk positiever.",
       links: [
         { tekst: "Lees het persbericht", url: "https://www2.dfobv.nl/assets/files/persbericht-bureau-dfo-meedenken-met-kantoor-bepaalt-waardering-serviceproviders.pdf" }
       ],
@@ -198,12 +200,12 @@ window.ONDERZOEK = {
     {
       jaar: "2026 · meting 1",
       kerncijfers: [
-        { waarde: "850", label: "beoordelingen, ongeveer" },
-        { waarde: "264", label: "advieskantoren deden mee" }
+        { waarde: "264", label: "advieskantoren deden mee" },
+        { waarde: "15", label: "partijen met genoeg beoordelingen" }
       ],
       samenvattingUrl: "https://www.dfobv.nl/wp-content/uploads/2026/06/Vakpaper-Serviceproviders-2026-meting-1.pdf",
       kernbevinding:
-        "Bereikbaarheid van de binnendienst en de doorlooptijd van de acceptatie bepalen het meest hoe adviseurs hun serviceprovider waarderen. Een kantoor werkt per markt meestal met één vaste serviceprovider, die het grootste deel van de omzet krijgt.",
+        "Adviseurs kiezen op uitvoering, niet op product: snelheid, bereikbaarheid en duidelijkheid bepalen de waardering, meer dan innovatieve producten. Kleine serviceproviders scoren beter op persoonlijke service, vooral in schade; grote op schaal en innovatie.",
       links: [
         { tekst: "Zo schreef VVP erover", url: "https://www.vvponline.nl/nieuws/dikke-voldoende-voor-serviceproviders" }
       ],
@@ -224,9 +226,9 @@ window.ONDERZOEK = {
         { waarde: "2.106", label: "beoordelingen door advieskantoren" },
         { waarde: "2,8", label: "serviceproviders per kantoor, gemiddeld" }
       ],
-      samenvattingUrl: "https://www.dfobv.nl/product/gratis-vakpaper-serviceproviders-onderzoek-2025/",
+      samenvattingUrl: "samenvattingen/2025.pdf",
       kernbevinding:
-        "Serviceproviders ontwikkelen zich van leverancier naar partner van het advieskantoor. Bijna een derde van de kantoren ziet een positief effect op het rendement van het kantoor.",
+        "Serviceproviders ontwikkelen zich van leverancier naar partner van het advieskantoor. De voorkeur verschuift voorzichtig naar één allround serviceprovider: 43% van de kantoren werkt het liefst met één partij, 36% met meerdere specialisten.",
       links: [
         { tekst: "Zo schreef VVP erover", url: "https://www.vvponline.nl/nieuws/hoogst-gewaardeerde-serviceproviders-van-2025" }
       ],
@@ -250,9 +252,9 @@ window.ONDERZOEK = {
         { waarde: "2.023", label: "beoordelingen door advieskantoren" },
         { waarde: "3,2", label: "serviceproviders per kantoor, gemiddeld" }
       ],
-      samenvattingUrl: "https://www.dfobv.nl/product/gratis-vakpaper-serviceproviders-onderzoek-2024/",
+      samenvattingUrl: "samenvattingen/2024.pdf",
       kernbevinding:
-        "De markt van serviceproviders consolideert en de verschillen in dienstverlening zijn groot. 39% van de kantoren werkt het liefst met één serviceprovider.",
+        "Kleine kantoren lopen tegen steeds meer taken aan die niets met hun klanten te maken hebben. Serviceproviders kunnen die ondersteunen, zodat de adviseur tijd houdt voor zijn klanten. Voor schade werken kantoren met de meeste serviceproviders samen.",
       links: [
         { tekst: "Zo schreef VVP erover", url: "https://www.vvponline.nl/nieuws/resultaten-dfo-onderzoek-serviceproviders-2024" }
       ],
@@ -265,6 +267,28 @@ window.ONDERZOEK = {
         { productgroep: "Particuliere schade", winnaar: "BSB Volmachten" },
         { productgroep: "Zakelijke schade", winnaar: "BSB Volmachten" },
         { productgroep: "Inkomen", winnaar: "VCN Verzekeringen" }
+      ]
+    },
+    {
+      jaar: "2023",
+      kerncijfers: [
+        { waarde: "2.045", label: "beoordelingen door advieskantoren" },
+        { waarde: "3,1", label: "serviceproviders per kantoor, gemiddeld" }
+      ],
+      samenvattingUrl: "samenvattingen/2023.pdf",
+      kernbevinding:
+        "Kleinere kantoren zoeken in hun serviceprovider ook een klankbord voor het ondernemerschap en toegang tot productspecialisten. Tegelijk stijgen de kosten van ICT en compliance, waardoor serviceproviders hun diensten verbreden.",
+      links: [
+        { tekst: "Zo schreef VVP erover", url: "https://www.vvponline.nl/nieuws/bureau-dfo-pleit-voor-intensievere-samenwerking-adviseurs-en-serviceproviders" }
+      ],
+      winnaarsTitel: "Best beoordeeld in 2023",
+      winnaars: [
+        { productgroep: "Hypotheken (groot)", winnaar: "De Financiële Makelaar" },
+        { productgroep: "Hypotheken (klein)", winnaar: "LNI" },
+        { productgroep: "Particuliere schade (groot)", winnaar: "VCN Verzekeringen" },
+        { productgroep: "Zakelijke schade (groot)", winnaar: "SUREbusiness" },
+        { productgroep: "Inkomen", winnaar: "VCN Verzekeringen" },
+        { productgroep: "Franchise", winnaar: "Financieel Fit" }
       ]
     }
   ],
