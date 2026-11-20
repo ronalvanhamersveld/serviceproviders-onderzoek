@@ -23,6 +23,9 @@
   function setText(sel, txt) { $$(sel).forEach(function (el) { el.textContent = txt; }); }
   function setHtml(sel, html) { var el = $(sel); if (el) el.innerHTML = html; }
   function extern(url) { return /^https?:/.test(url) ? ' target="_blank" rel="noopener"' : ""; }
+  // Versie B staat in een submap: relatieve links (zoals samenvattingen/...) krijgen de basis uit index.html.
+  var BASIS = window.ONDERZOEK_BASIS || "";
+  function pad(url) { return (!url || /^(https?:|mailto:|tel:|#|\/)/.test(url)) ? url : BASIS + url; }
   function sleutel(naam) { return String(naam).trim().split(/\s+/)[0].toLowerCase(); }
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -183,10 +186,10 @@
       return "<div><strong>" + esc(c.waarde) + "</strong><span>" + esc(c.label) + "</span></div>";
     }).join("");
     var links = (j.links || []).map(function (l) {
-      return '<a href="' + esc(l.url) + '"' + extern(l.url) + ">" + esc(l.tekst) + "</a>";
+      return '<a href="' + esc(pad(l.url)) + '"' + extern(l.url) + ">" + esc(l.tekst) + "</a>";
     }).join("");
     var download = j.samenvattingUrl
-      ? '<a class="btn btn-light btn-small" href="' + esc(j.samenvattingUrl) + '"' + extern(j.samenvattingUrl) + ">Download de samenvatting</a>"
+      ? '<a class="btn btn-light btn-small" href="' + esc(pad(j.samenvattingUrl)) + '"' + extern(j.samenvattingUrl) + ">Download de samenvatting</a>"
       : "";
     var winnaars = (j.winnaars || []).map(function (w) {
       return "<dt>" + esc(w.productgroep) + "</dt><dd>" + esc(w.winnaar) + "</dd>";
