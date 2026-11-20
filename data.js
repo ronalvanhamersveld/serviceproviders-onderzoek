@@ -10,7 +10,7 @@
 */
 window.ONDERZOEK = {
   voorbeeld: true,
-  voorbeeldTekst: "Voorbeeldversie: de sluitdatum, de stand per markt, de link naar de vragenlijst en de voorbereidingslink zijn nog niet echt.",
+  voorbeeldTekst: "Voorbeeldversie: de sluitdatum, de link naar de vragenlijst en de voorbereidingslink zijn nog niet echt.",
 
   naam: "Serviceproviders-onderzoek",
   editie: "2026 · meting 3",
@@ -23,25 +23,18 @@ window.ONDERZOEK = {
   duurMinuten: 8,
   sluitdatum: "2026-12-19",
   resultatenBekend: "begin 2027",
-  laatstBijgewerkt: "2026-11-20",
 
   // De metingen van dit jaar. status: "afgerond", "open" of "gepland".
   metingen: [
-    { naam: "Meting 1", periode: "voorjaar", thema: "Binnendienst en acceptatie", status: "afgerond" },
+    // samenvattingUrl is optioneel: link naar de samenvatting van die meting.
+    { naam: "Meting 1", periode: "voorjaar", thema: "Binnendienst en acceptatie", status: "afgerond", samenvattingUrl: "https://www.dfobv.nl/wp-content/uploads/2026/06/Vakpaper-Serviceproviders-2026-meting-1.pdf" },
     { naam: "Meting 2", periode: "zomer", thema: "Marktgerichtheid", status: "afgerond" },
     { naam: "Meting 3", periode: "najaar", thema: "Bedrijfsvoering", status: "open" }
   ],
   metingenIntro: "Vanaf 2026 drie metingen, elk met een eigen thema. Per markt wordt de best beoordeelde serviceprovider bekendgemaakt.",
 
-  // Respons per markt voor de huidige meting: doel = aantal beoordelingen
-  // dat we nodig hebben, huidig = aantal dat nu binnen is. Wekelijks bijwerken.
-  productgroepen: [
-    { naam: "Hypotheken", doel: 300, huidig: 205 },
-    { naam: "Consumptief krediet", doel: 80, huidig: 31 },
-    { naam: "Particuliere schade", doel: 250, huidig: 168 },
-    { naam: "Zakelijke schade", doel: 200, huidig: 92 },
-    { naam: "Franchise (hypotheken en verzekeren)", doel: 100, huidig: 44 }
-  ],
+  // Alleen voor versie B: de markten om uit te kiezen.
+  markten: ["Hypotheken", "Consumptief krediet", "Particuliere schade", "Zakelijke schade", "Franchise"],
 
   // Voorbereidingslink: adviseurs vullen één keer hun kantoorgegevens in,
   // zodat ze die niet bij elke meting opnieuw hoeven in te vullen.
@@ -57,6 +50,17 @@ window.ONDERZOEK = {
       "Je beoordeelt direct de serviceproviders waar je mee werkt"
     ],
     knop: "Vul je gegevens alvast in"
+  },
+
+  // Alleen voor versie B: het uitgelichte cijferpaar bovenaan (belang tegenover waardering, schaal 1-10).
+  // Alleen openbare cijfers gebruiken (persbericht). Laat weg om het blok te verbergen.
+  uitgelicht: {
+    label: "Uitkomst meting 2, 2026",
+    onderwerp: "Meedenken met het kantoor",
+    belang: 8.30,
+    waardering: 6.66,
+    tekst: "Adviseurs vinden meedenken belangrijk, maar serviceproviders scoren er gemiddeld een stuk lager op. Juist dit aspect bepaalt het sterkst of adviseurs een serviceprovider aanbevelen.",
+    bron: "Persbericht Bureau DFO, 15 oktober 2026 · 1.018 beoordelingen"
   },
 
   // Kerncijfers bovenaan de pagina.
@@ -110,6 +114,56 @@ window.ONDERZOEK = {
     aanvraagUrl: "mailto:info@dfobv.nl?subject=Aanvraag%20rapport%20Serviceproviders-onderzoek%202026",
     contact: { naam: "Bureau DFO", telefoon: "033 – 258 04 60", email: "info@dfobv.nl" }
   },
+
+  // Teasers: grafieken uit het onderzoek. Alleen cijfers per markt, nooit per serviceprovider.
+  // Alle cijfers hieronder komen uit de openbare persberichten en de vakpaper van meting 1.
+  // soort "paar": twee punten per rij (a en b). soort "staven": één waarde per rij.
+  inzichten: [
+    {
+      kop: "Kleinere serviceproviders worden hoger gewaardeerd",
+      uitleg: "Gemiddelde waardering van grote en kleine serviceproviders op marktgerichtheid. Schaal 1 tot 10.",
+      bron: "Meting 2, 2026: marktgerichtheid (persbericht 15 oktober 2026)",
+      soort: "paar",
+      domein: [5, 9], ticks: [5, 6, 7, 8, 9], decimalen: 1,
+      reeksA: { naam: "Grote serviceproviders", kleur: "#4F95CF", open: true },
+      reeksB: { naam: "Kleine serviceproviders", kleur: "#005EA9", open: false },
+      verschil: true,
+      rijen: [
+        { label: "Zakelijke schade", a: 6.9, b: 8.5 },
+        { label: "Particuliere schade", a: 6.7, b: 7.8 }
+      ]
+    },
+    {
+      kop: "Hypotheekadviseurs zijn het kritischst",
+      uitleg: "Gemiddelde waardering van de serviceproviders op marktgerichtheid, per markt. Schaal 1 tot 10.",
+      bron: "Meting 2, 2026: marktgerichtheid (persbericht 15 oktober 2026)",
+      soort: "staven",
+      domein: [0, 10], ticks: [0, 2, 4, 6, 8, 10], decimalen: 1,
+      kleur: "#005EA9",
+      rijen: [
+        { label: "Zakelijke schade", waarde: 7.15 },
+        { label: "Particuliere schade", waarde: 6.96 },
+        { label: "Hypotheken", waarde: 6.52 }
+      ]
+    },
+    {
+      kop: "Bereikbaarheid en snelheid wegen het zwaarst",
+      uitleg: "Hoe belangrijk adviseurs elk aspect van de binnendienst en acceptatie vinden. Schaal 1 tot 10.",
+      bron: "Meting 1, 2026: binnendienst en acceptatie (vakpaper juni 2026)",
+      soort: "staven",
+      domein: [0, 10], ticks: [0, 2, 4, 6, 8, 10], decimalen: 1,
+      kleur: "#005EA9",
+      rijen: [
+        { label: "Bereikbaarheid", waarde: 8.82 },
+        { label: "Doorlooptijd acceptatie", waarde: 8.76 },
+        { label: "Snelheid antwoorden", waarde: 8.62 },
+        { label: "Maatwerk", waarde: 8.58 },
+        { label: "Duidelijke criteria", waarde: 8.57 },
+        { label: "Innovatieve producten", waarde: 8.05 },
+        { label: "Vast aanspreekpunt", waarde: 7.81 }
+      ]
+    }
+  ],
 
   // Eerdere resultaten. Nieuwste bovenaan.
   // Bron: persberichten en vakpapers van Bureau DFO (openbaar).
@@ -244,13 +298,17 @@ window.ONDERZOEK = {
       { medium: "VVP", datum: "oktober 2022", titel: "Hoogst gewaardeerde serviceproviders van 2022", url: "https://www.vvponline.nl/nieuws/hoogst-gewaardeerde-serviceproviders-van-2022" },
       { medium: "InFinance", datum: "oktober 2022", titel: "Hoogst gewaardeerde serviceproviders 2022", url: "https://infinance.nl/artikel/hoogst-gewaardeerde-serviceproviders-2022/" }
     ],
-    // Berichten van serviceproviders zelf over hun resultaat.
+    // Berichten van serviceproviders zelf over hun resultaat. Nieuwste bovenaan.
+    // soort: bijvoorbeeld "Nieuwsbericht" of "LinkedIn".
     aanbiedersOver: [
-      { medium: "Turien & Co.", datum: "oktober 2026", titel: "Beste serviceprovider in de categorie particuliere schade", url: "https://www.turien.nl/adviseur/nieuws/turien-co-beste-serviceprovider-in-categorie-particuliere-schade-1" },
-      { medium: "VCN", datum: "2026", titel: "Drie keer uitgeroepen tot beste serviceprovider", url: "https://www.vcn.nl/testimonial/17/vcn-uitgroepen-tot-beste-serviceprovider-2025-dfo" },
-      { medium: "SUREbusiness", datum: "november 2025", titel: "Beste serviceprovider Schade Zakelijk groot 2025", url: "https://www.surebusiness.nl/nieuws/surebusiness-beste-serviceprovider-schade-zakelijk-groot-2025" },
-      { medium: "BSB Volmachten", datum: "2024", titel: "Uitgeroepen tot beste serviceprovider", url: "https://www.bsbvolmachten.nl/beste-service-provider-2024/" },
-      { medium: "SUREbusiness", datum: "november 2023", titel: "Beste serviceprovider Schade Zakelijk 2023", url: "https://www.surebusiness.nl/nieuws/surebusiness-beste-serviceprovider-schade-zakelijk-2023" }
+      { medium: "Turien & Co.", datum: "oktober 2026", titel: "Beste serviceprovider in de categorie particuliere schade", soort: "Nieuwsbericht", url: "https://www.turien.nl/adviseur/nieuws/turien-co-beste-serviceprovider-in-categorie-particuliere-schade-1" },
+      { medium: "VCN", datum: "2026", titel: "Drie keer uitgeroepen tot beste serviceprovider", soort: "Nieuwsbericht", url: "https://www.vcn.nl/testimonial/17/vcn-uitgroepen-tot-beste-serviceprovider-2025-dfo" },
+      { medium: "SUREbusiness", datum: "november 2025", titel: "Beste serviceprovider Schade Zakelijk groot 2025", soort: "Nieuwsbericht", url: "https://www.surebusiness.nl/nieuws/surebusiness-beste-serviceprovider-schade-zakelijk-groot-2025" },
+      { medium: "BSB Volmachten", datum: "2024", titel: "Uitgeroepen tot beste serviceprovider", soort: "Nieuwsbericht", url: "https://www.bsbvolmachten.nl/beste-service-provider-2024/" },
+      { medium: "SUREbusiness", datum: "november 2023", titel: "Beste serviceprovider Schade Zakelijk 2023", soort: "Nieuwsbericht", url: "https://www.surebusiness.nl/nieuws/surebusiness-beste-serviceprovider-schade-zakelijk-2023" },
+      { medium: "SUREbusiness", datum: "oktober 2022", titel: "Beste serviceprovider Zakelijk Schade Groot 2022", soort: "Nieuwsbericht", url: "https://www.surebusiness.nl/nieuws/surebusiness-beste-serviceprovider-zakelijk-schade-groot-2022" },
+      { medium: "Acura", datum: "2021 en 2022", titel: "De beste kleine serviceprovider", soort: "Nieuwsbericht", url: "https://www.acura.nl/kwaliteit-en-wetgeving/de-beste-kleine-serviceprovider/" },
+      { medium: "LNI", datum: "2020", titel: "LNI beste serviceprovider 2020", soort: "Nieuwsbericht", url: "https://lni.nl/nieuws/lni-beste-serviceprovider-2020" }
     ]
   },
 

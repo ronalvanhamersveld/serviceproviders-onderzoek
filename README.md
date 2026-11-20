@@ -12,13 +12,16 @@ Losse wervingspagina voor het Serviceproviders-onderzoek van DFO Onderzoek, bedo
 | `app.js` | Vult de pagina met de gegevens uit `data.js` | Nee |
 | `assets/` | Logo en favicon | Alleen bij nieuw logo |
 | `samenvattingen/` | Pdf's van de samenvattingen die nog niet elders online staan | Bij een nieuwe samenvatting |
+| `versie-b/` | Variant met een andere opbouw (uitkomst eerst, kiezen per markt). Gebruikt dezelfde `data.js` en `assets/` | Nee |
+
+Versie A staat op `.../serviceproviders-onderzoek/`, versie B op `.../serviceproviders-onderzoek/versie-b/`.
 
 ## Voor livegang
 
-1. Vul in `data.js` de echte gegevens in: link naar de vragenlijst (Crowdtech), sluitdatum, welke meting open is, doelen per markt en eventueel de voorbereidingslink.
+1. Vul in `data.js` de echte gegevens in: link naar de vragenlijst (Crowdtech), sluitdatum, welke meting open is en eventueel de voorbereidingslink.
 2. Zet `voorbeeld: false` in `data.js`, dan verdwijnt de gele balk.
-3. Vervang in `index.html` de link `#privacy-link-volgt` door de link naar de privacyverklaring.
-4. Laat bij "Stand van zaken" alleen percentages van het doel zien, geen dalende aantallen respondenten.
+3. Vervang in `index.html` (en `versie-b/index.html`) de link `#privacy-link-volgt` door de link naar de privacyverklaring.
+4. Net als bij Performance staat er geen voortgang of stand per markt op de pagina.
 
 ## Afspraken over de inhoud
 
@@ -26,9 +29,9 @@ Losse wervingspagina voor het Serviceproviders-onderzoek van DFO Onderzoek, bedo
 - De vakpaper is "aangeboden door de deelnemende serviceproviders". Nooit schrijven dat er geen betaalde plek is.
 - Eerlijke tijden: mediaan 2026 meting 1 9,1 minuten, meting 2 6,2 minuten. De voorbereidingslink scheelt ongeveer 1½ à 2 minuten per meting en kost zelf één keer per jaar ongeveer 6 minuten.
 
-## Wekelijks bijwerken
+## Bijwerken
 
-Werk in `data.js` per markt `huidig` bij, en zet `laatstBijgewerkt` op de datum van vandaag. Het totaalpercentage, het aantal dagen dat de vragenlijst nog open staat en de labels "Hier missen we jou" (onder 50% van het doel) worden vanzelf berekend. Na de sluitdatum veranderen de knoppen automatisch in "Bekijk de resultaten".
+Alles staat in `data.js`: de huidige meting (`metingen`, `vragenlijstUrl`, `sluitdatum`), de grafieken (`inzichten`, alleen openbare cijfers per markt), de eerdere resultaten met downloadlinks (`vorigeJaren`), de artikelen in de vakpers (`impact.vakpers`) en de berichten van winnaars (`impact.aanbiedersOver`). Na de sluitdatum veranderen de knoppen automatisch in "Bekijk de resultaten".
 
 ## Een samenvatting toevoegen
 

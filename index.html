@@ -23,7 +23,7 @@
       </a>
       <nav class="main-nav" aria-label="Hoofdmenu">
         <a href="#adviseurs">Waarom meedoen</a>
-        <a href="#status">Stand van zaken</a>
+        <a href="#inzichten">Uit het onderzoek</a>
         <a href="#resultaten">Resultaten</a>
         <a href="#vragen">Vragen</a>
       </nav>
@@ -59,14 +59,7 @@
               <svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>
             </span><span id="fact-sluit"></span></li>
           </ul>
-          <div class="mini-status">
-            <div class="mini-status-top">
-              <span><strong id="totaal-pct">0</strong>% van de benodigde beoordelingen</span>
-              <span id="dagen-tekst"></span>
-            </div>
-            <div class="bar" role="progressbar" aria-label="Voortgang meting" aria-valuemin="0" aria-valuemax="100" id="totaal-bar"><span></span></div>
-          </div>
-          <a class="status-link" href="#status">Bekijk per markt</a>
+          <a class="btn meting-kaart-cta js-cta" href="#">Start de vragenlijst</a>
           <p class="prep-hint" id="prep-hint"><a href="#voorbereiding">Sneller door elke meting:</a> vul je kantoorgegevens één keer in.</p>
         </aside>
       </div>
@@ -111,20 +104,15 @@
       </div>
     </section>
 
-    <!-- 5. Stand van zaken -->
-    <section class="section" id="status">
+    <!-- 5. Inzichten uit het onderzoek -->
+    <section class="section" id="inzichten">
       <div class="wrap">
-        <div class="section-head">
-          <div>
-            <p class="kicker">Stand van zaken <span class="js-meting-naam">meting 3</span></p>
-            <h2>Hier hebben we jou nog nodig</h2>
-            <p class="section-intro">Per markt hebben we een minimum aantal beoordelingen nodig om betrouwbare uitspraken te doen. Werk je met een serviceprovider in een markt die nog achterloopt? Dan telt jouw stem dubbel.</p>
-          </div>
-          <p class="updated" id="bijgewerkt"></p>
-        </div>
-        <div class="group-grid" id="groepen"></div>
-        <div class="center"><a class="btn js-cta" href="#">Start de vragenlijst</a></div>
+        <p class="kicker">Uit het onderzoek</p>
+        <h2>Zo staat de markt ervoor</h2>
+        <p class="section-intro">Een paar uitkomsten uit eerdere metingen. Alle cijfers staan in de samenvattingen, die je gratis kunt downloaden.</p>
+        <div class="insight-grid" id="inzichten-lijst"></div>
       </div>
+      <div class="chart-tip" id="chart-tip" role="status" aria-live="polite" hidden></div>
     </section>
 
     <!-- 6. Eerdere resultaten -->

@@ -104,35 +104,16 @@
       return '<li class="meting meting-' + esc(m.status) + '">' +
         '<span class="meting-nr" aria-hidden="true">' + (i + 1) + "</span>" +
         '<div class="meting-body"><p class="meting-naam">' + esc(m.naam) + (m.periode ? ", " + esc(m.periode) : "") + "</p>" +
-        '<p class="meting-thema">' + esc(m.thema) + "</p></div>" +
+        '<p class="meting-thema">' + esc(m.thema) + "</p>" +
+        (m.samenvattingUrl ? '<a class="meting-download" href="' + esc(m.samenvattingUrl) + '"' + linkAttrs(m.samenvattingUrl) + '><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download samenvatting</a>' : "") +
+        (m.status === "open" && !gesloten ? '<a class="btn btn-small meting-cta" href="' + esc(d.vragenlijstUrl) + '"' + linkAttrs(d.vragenlijstUrl) + ">Vul de vragenlijst in</a>" : "") +
+        "</div>" +
         '<span class="pill pill-' + esc(m.status) + '">' + (STATUS[m.status] || esc(m.status)) + "</span></li>";
     }).join(""));
   } else {
     $("#metingen-sectie").hidden = true;
   }
 
-  // Stand van zaken
-  var totDoel = 0, totHuidig = 0;
-  d.productgroepen.forEach(function (g) {
-    totDoel += g.doel;
-    totHuidig += Math.min(g.huidig, g.doel);
-  });
-  var totPct = totDoel ? Math.round((totHuidig / totDoel) * 100) : 0;
-  setText("#bijgewerkt", "Bijgewerkt op " + datum(d.laatstBijgewerkt));
-  $("#totaal-bar").setAttribute("aria-valuenow", totPct);
-
-  var groepen = d.productgroepen.slice().sort(function (a, b) { return a.huidig / a.doel - b.huidig / b.doel; });
-  setHtml("#groepen", groepen.map(function (g) {
-    var pct = Math.min(100, Math.round((g.huidig / g.doel) * 100));
-    var nodig = Math.max(0, g.doel - g.huidig);
-    var laag = pct < LAAG * 100, vol = nodig === 0;
-    return '<article class="group' + (laag ? " prio" : "") + '">' +
-      '<div class="group-top"><h4>' + esc(g.naam) + '</h4><span class="group-pct">' + pct + "%</span></div>" +
-      '<div class="bar' + (laag ? " laag" : vol ? " vol" : "") + '" role="progressbar" aria-label="' + esc(g.naam) + '" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '" data-pct="' + pct + '"><span></span></div>' +
-      '<div class="group-meta"><span>' + (vol ? "Doel gehaald" : "Nog " + getal(nodig) + " beoordelingen nodig") + "</span>" +
-      (laag ? '<span class="badge">Hier missen we jou</span>' : vol ? '<span class="badge ok">Gehaald</span>' : "") +
-      "</div></article>";
-  }).join(""));
 
   // Opbrengst voor adviseurs
   var iconen = [
@@ -165,6 +146,84 @@
   }).join(""));
   if (ab.contact) {
     setText("#aanbieders-contact", "Liever eerst overleggen? Bel " + ab.contact.naam + " op " + ab.contact.telefoon + " of mail naar " + ab.contact.email + ".");
+  }
+
+  // Inzichten: kleine grafieken uit het onderzoek
+  function nl(n, dec) { return n == null ? "–" : Number(n).toLocaleString("nl-NL", { minimumFractionDigits: dec, maximumFractionDigits: dec }); }
+  function grafiek(g) {
+    var W = 320, LBL = g.soort === "staven" ? 150 : 128, RECHTS = g.soort === "staven" ? 30 : 38, TOP = 6, RIJ = g.soort === "staven" ? 28 : 32, AS = 22;
+    var x0 = LBL, x1 = W - RECHTS, H = TOP + g.rijen.length * RIJ + AS;
+    var lo = g.domein[0], hi = g.domein[1];
+    function X(v) { return x0 + (v - lo) / (hi - lo) * (x1 - x0); }
+    var s = '<svg class="chart" viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="' + esc(g.kop) + '">';
+    g.ticks.forEach(function (t) {
+      s += '<line class="grid" x1="' + X(t) + '" x2="' + X(t) + '" y1="' + TOP + '" y2="' + (H - AS) + '"/>' +
+        '<text class="tick" x="' + X(t) + '" y="' + (H - 6) + '" text-anchor="middle">' + nl(t, 0) + "</text>";
+    });
+    g.rijen.forEach(function (r, i) {
+      var cy = TOP + i * RIJ + RIJ / 2, tip;
+      s += '<text class="row-label" x="' + (LBL - 10) + '" y="' + (cy + 4) + '" text-anchor="end">' + esc(r.label) + "</text>";
+      if (g.soort === "staven") {
+        var w = Math.max(0, X(r.waarde) - x0), h = 14, y = cy - h / 2, rr = Math.min(4, w / 2);
+        s += '<path fill="' + g.kleur + '" d="M' + x0 + " " + y + "h" + (w - rr) + "a" + rr + " " + rr + " 0 0 1 " + rr + " " + rr + "v" + (h - 2 * rr) + "a" + rr + " " + rr + " 0 0 1 -" + rr + " " + rr + "h-" + (w - rr) + 'z"/>' +
+          '<text class="val" x="' + (X(r.waarde) + 6) + '" y="' + (cy + 4) + '">' + nl(r.waarde, g.decimalen) + "</text>";
+        tip = r.label + ": " + nl(r.waarde, 2);
+      } else {
+        if (r.a != null && r.b != null) s += '<line class="link" x1="' + X(r.a) + '" x2="' + X(r.b) + '" y1="' + cy + '" y2="' + cy + '"/>';
+        [["a", g.reeksA], ["b", g.reeksB]].forEach(function (p) {
+          var v = r[p[0]], rs = p[1];
+          if (v == null) return;
+          s += rs.open
+            ? '<circle cx="' + X(v) + '" cy="' + cy + '" r="5.5" fill="#FFFFFF" stroke="' + rs.kleur + '" stroke-width="2.5"/>'
+            : '<circle cx="' + X(v) + '" cy="' + cy + '" r="6.5" fill="' + rs.kleur + '" stroke="#FFFFFF" stroke-width="2"/>';
+        });
+        var rechts = g.verschil ? "+" + nl(r.b - r.a, 1) : nl(r.b, g.decimalen);
+        s += '<text class="val" x="' + (W - 4) + '" y="' + (cy + 4) + '" text-anchor="end">' + rechts + "</text>";
+        tip = r.label + " · " + g.reeksA.naam + ": " + nl(r.a, g.verschil ? 2 : 0) + " · " + g.reeksB.naam + ": " + nl(r.b, g.verschil ? 2 : 0) +
+          (g.verschil ? " · verschil " + nl(r.b - r.a, 2) : "");
+      }
+      s += '<rect class="hit" x="0" y="' + (cy - RIJ / 2) + '" width="' + W + '" height="' + RIJ + '" tabindex="0" data-tip="' + esc(tip) + '" aria-label="' + esc(tip) + '"/>';
+    });
+    s += "</svg>";
+
+    var legenda = "";
+    if (g.soort === "paar") {
+      legenda = '<ul class="legend">' + [g.reeksA, g.reeksB].map(function (rs) {
+        return '<li><span class="swatch' + (rs.open ? " swatch-open" : "") + '" style="' + (rs.open ? "border-color:" : "background:") + rs.kleur + '"></span>' + esc(rs.naam) + "</li>";
+      }).join("") + (g.verschil ? '<li class="legend-note">rechts: verschil</li>' : "") + "</ul>";
+    }
+    var kol = g.soort === "staven" ? ["Aspect", "Belang"] : ["Markt", g.reeksA.naam, g.reeksB.naam].concat(g.verschil ? ["Verschil"] : []);
+    var tabel = '<details class="chart-table"><summary>Bekijk als tabel</summary><div class="table-scroll"><table><thead><tr>' +
+      kol.map(function (k, i) { return "<th" + (i ? ' class="num"' : "") + ">" + esc(k) + "</th>"; }).join("") + "</tr></thead><tbody>" +
+      g.rijen.map(function (r) {
+        var cellen = g.soort === "staven" ? [nl(r.waarde, 2)] : [nl(r.a, g.verschil ? 2 : 0), nl(r.b, g.verschil ? 2 : 0)].concat(g.verschil ? [nl(r.b - r.a, 2)] : []);
+        return "<tr><td>" + esc(r.label) + "</td>" + cellen.map(function (c) { return '<td class="num">' + c + "</td>"; }).join("") + "</tr>";
+      }).join("") + "</tbody></table></div></details>";
+
+    return '<figure class="insight"><figcaption><h3>' + esc(g.kop) + "</h3><p>" + esc(g.uitleg) + "</p></figcaption>" +
+      legenda + s + (g.noot ? '<p class="chart-note">' + esc(g.noot) + "</p>" : "") +
+      '<p class="chart-source">Bron: ' + esc(g.bron) + "</p>" + tabel + "</figure>";
+  }
+  var inzichten = d.inzichten || [];
+  if (inzichten.length && $("#inzichten-lijst")) {
+    setHtml("#inzichten-lijst", inzichten.map(grafiek).join(""));
+    var tipEl = $("#chart-tip");
+    function toonTip(t, x, y) {
+      tipEl.textContent = t; tipEl.hidden = false;
+      var bw = tipEl.offsetWidth, bh = tipEl.offsetHeight;
+      var left = Math.min(window.innerWidth - bw - 8, Math.max(8, x - bw / 2));
+      var top = y - bh - 12; if (top < 8) top = y + 16;
+      tipEl.style.left = left + "px"; tipEl.style.top = top + "px";
+    }
+    $$("#inzichten-lijst .hit").forEach(function (h) {
+      h.addEventListener("mousemove", function (e) { toonTip(h.getAttribute("data-tip"), e.clientX, e.clientY); h.classList.add("active"); });
+      h.addEventListener("mouseleave", function () { tipEl.hidden = true; h.classList.remove("active"); });
+      h.addEventListener("focus", function () { var b = h.getBoundingClientRect(); toonTip(h.getAttribute("data-tip"), b.left + b.width / 2, b.top); });
+      h.addEventListener("blur", function () { tipEl.hidden = true; });
+    });
+    window.addEventListener("scroll", function () { tipEl.hidden = true; }, { passive: true });
+  } else if ($("#inzichten")) {
+    $("#inzichten").hidden = true;
   }
 
   // Eerdere resultaten met tabs
@@ -221,22 +280,45 @@
     var titel = p.link ? '<a href="' + esc(p.link) + '"' + linkAttrs(p.link) + ">" + esc(p.titel) + "</a>" : esc(p.titel);
     return "<li><strong>" + titel + "</strong><p>" + esc(p.tekst) + "</p></li>";
   }).join(""));
-  function persKaarten(lijst) {
-    return '<ul class="press-list">' + lijst.map(function (a) {
-      return '<li><a href="' + esc(a.url) + '"' + linkAttrs(a.url) + '><span class="press-medium">' + esc(a.medium) + '</span><span class="press-head">' + esc(a.titel) + '</span><span class="press-date">' + esc(a.datum) + "</span></a></li>";
-    }).join("") + "</ul>";
+  // Carrousels: vakpers en berichten van winnaars
+  function carrousel(titel, lijst, extraKlasse) {
+    var id = "car-" + Math.random().toString(36).slice(2, 7);
+    return '<div class="carousel' + (extraKlasse ? " " + extraKlasse : "") + '" role="region" aria-roledescription="carrousel" aria-label="' + esc(titel) + '">' +
+      '<div class="carousel-head"><h3 class="press-title">' + esc(titel) + " <span class=\"press-count\">(" + lijst.length + ")</span></h3>" +
+      '<div class="carousel-nav"><button type="button" class="car-btn" data-dir="-1" aria-controls="' + id + '" aria-label="Vorige">' +
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>' +
+      '<button type="button" class="car-btn" data-dir="1" aria-controls="' + id + '" aria-label="Volgende">' +
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button></div></div>' +
+      '<ul class="carousel-track" id="' + id + '" tabindex="0">' + lijst.map(function (a) {
+        return '<li><a href="' + esc(a.url) + '"' + linkAttrs(a.url) + '><span class="press-medium">' + esc(a.medium) + "</span>" +
+          '<span class="press-head">' + esc(a.titel) + "</span>" +
+          '<span class="press-foot"><span class="press-date">' + esc(a.datum) + "</span>" +
+          (a.soort ? '<span class="press-type">' + esc(a.soort) + "</span>" : "") + "</span></a></li>";
+      }).join("") + "</ul></div>";
   }
   var pers = d.impact.vakpers || [], eigen = d.impact.aanbiedersOver || [], persHtml = "";
-  if (pers.length) {
-    persHtml += '<h3 class="press-title">In de vakpers</h3>' + persKaarten(pers.slice(0, 4));
-    if (pers.length > 4) {
-      persHtml += '<details class="press-more"><summary>Nog ' + (pers.length - 4) + " artikelen</summary>" + persKaarten(pers.slice(4)) + "</details>";
-    }
+  if (pers.length) persHtml += carrousel("In de vakpers", pers);
+  if (eigen.length) persHtml += carrousel("De winnaars delen hun resultaat", eigen, "carousel-gap");
+  if (persHtml && $("#vakpers")) {
+    setHtml("#vakpers", persHtml);
+    $$("#vakpers .carousel").forEach(function (c) {
+      var track = c.querySelector(".carousel-track"), knoppen = c.querySelectorAll(".car-btn");
+      function bijwerken() {
+        var max = track.scrollWidth - track.clientWidth - 2;
+        knoppen[0].disabled = track.scrollLeft <= 2;
+        knoppen[1].disabled = track.scrollLeft >= max;
+        c.classList.toggle("is-static", max <= 0);
+      }
+      Array.prototype.forEach.call(knoppen, function (b) {
+        b.addEventListener("click", function () {
+          track.scrollBy({ left: Number(b.getAttribute("data-dir")) * track.clientWidth * 0.9, behavior: "smooth" });
+        });
+      });
+      track.addEventListener("scroll", bijwerken, { passive: true });
+      window.addEventListener("resize", bijwerken);
+      bijwerken();
+    });
   }
-  if (eigen.length) {
-    persHtml += '<h3 class="press-title press-title-gap">De winnaars delen hun resultaat</h3>' + persKaarten(eigen);
-  }
-  if (persHtml && $("#vakpers")) setHtml("#vakpers", persHtml);
 
   // FAQ
   function faqHtml(lijst) {
@@ -246,21 +328,6 @@
   }
   setHtml("#faq", faqHtml(d.faq));
   setHtml("#faq-aanbieders", faqHtml(d.faqAanbieders));
-
-  // Balken vullen (direct zichtbaar, met een korte animatie)
-  function vul(bar) { bar.querySelector("span").style.width = (bar.getAttribute("data-pct") || totPct) + "%"; }
-  requestAnimationFrame(function () { $$(".bar").forEach(vul); });
-
-  // Tellen van het totaalpercentage
-  var el = $("#totaal-pct"), start = null;
-  function tel(t) {
-    if (!start) start = t;
-    var v = Math.min(1, (t - start) / 1200);
-    el.textContent = Math.round(totPct * (1 - Math.pow(1 - v, 3)));
-    if (v < 1) requestAnimationFrame(tel);
-  }
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) el.textContent = totPct;
-  else requestAnimationFrame(tel);
 
   // Plakknop op mobiel: tonen zodra de hero uit beeld is
   var sticky = $("#sticky-cta"), hero = $(".hero");
