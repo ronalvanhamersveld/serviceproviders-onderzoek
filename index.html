@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Serviceproviders-onderzoek | DFO Onderzoek</title>
+  <meta name="description" content="Doe mee aan het Serviceproviders-onderzoek van DFO Onderzoek. Beoordeel in ongeveer 8 minuten de serviceproviders en franchiseorganisaties waar je mee werkt en weet hoe ze ervoor staan.">
+  <meta property="og:title" content="Serviceproviders-onderzoek | DFO Onderzoek">
+  <meta property="og:description" content="Hoe staan de serviceproviders ervoor? Beoordeel ze in ongeveer 8 minuten en ontvang de uitkomsten per markt.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/logo.png">
+  <meta name="theme-color" content="#005EA9">
+  <link rel="icon" href="assets/favicon.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="demo-bar" id="demo-bar" hidden></div>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a href="#top" class="logo" aria-label="DFO Onderzoek, naar boven">
+        <img src="assets/logo.png" alt="DFO Onderzoek" width="160" height="56">
+      </a>
+      <nav class="main-nav" aria-label="Hoofdmenu">
+        <a href="#adviseurs">Waarom meedoen</a>
+        <a href="#status">Stand van zaken</a>
+        <a href="#resultaten">Resultaten</a>
+        <a href="#vragen">Vragen</a>
+      </nav>
+      <a class="btn btn-small js-cta" href="#">Doe mee</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- 1. Hero -->
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-text">
+          <p class="eyebrow"><span id="hero-naam"></span> <span id="hero-editie"></span></p>
+          <h1>Hoe staan de serviceproviders ervoor?</h1>
+          <p class="lead" id="hero-ondertitel"></p>
+          <div class="hero-actions">
+            <a class="btn btn-light js-cta" href="#">Start de vragenlijst</a>
+            <a class="link-light" href="#resultaten">Bekijk eerdere resultaten</a>
+          </div>
+        </div>
+
+        <aside class="path path-adviseur" aria-labelledby="meting-kaart-titel">
+          <p class="path-label">Nu open</p>
+          <h2 id="meting-kaart-titel">Vul <span class="js-meting-naam">meting 3</span> in</h2>
+          <ul class="facts">
+            <li id="fact-thema-li"><span class="fact-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+            </span><span id="fact-thema"></span></li>
+            <li><span class="fact-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            </span><span id="fact-duur"></span></li>
+            <li><span class="fact-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>
+            </span><span id="fact-sluit"></span></li>
+          </ul>
+          <div class="mini-status">
+            <div class="mini-status-top">
+              <span><strong id="totaal-pct">0</strong>% van de benodigde beoordelingen</span>
+              <span id="dagen-tekst"></span>
+            </div>
+            <div class="bar" role="progressbar" aria-label="Voortgang meting" aria-valuemin="0" aria-valuemax="100" id="totaal-bar"><span></span></div>
+          </div>
+          <a class="status-link" href="#status">Bekijk per markt</a>
+          <p class="prep-hint" id="prep-hint"><a href="#voorbereiding">Sneller door elke meting:</a> vul je kantoorgegevens één keer in.</p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- 2. Kerncijfers -->
+    <section class="figures" aria-label="Kerncijfers">
+      <div class="wrap figures-row" id="kerncijfers"></div>
+    </section>
+
+    <!-- 3. Waarom meedoen -->
+    <section class="section" id="adviseurs">
+      <div class="wrap">
+        <p class="kicker">Waarom meedoen</p>
+        <h2>8 minuten van jou, en je weet hoe de serviceproviders ervoor staan</h2>
+        <div class="card-grid" id="opbrengst-lijst"></div>
+      </div>
+    </section>
+
+    <!-- 3b. Voorbereidingslink -->
+    <section class="prep-band" id="voorbereiding">
+      <div class="wrap prep-grid">
+        <div class="prep-text">
+          <p class="kicker kicker-light">Tijd besparen</p>
+          <h2 id="prep-kop"></h2>
+          <p id="prep-tekst"></p>
+          <a class="btn btn-light js-prep" href="#">Vul je gegevens alvast in</a>
+        </div>
+        <ol class="prep-steps" id="prep-stappen"></ol>
+      </div>
+    </section>
+
+    <!-- 4. Metingen van dit jaar -->
+    <section class="section section-tint section-compact" id="metingen-sectie">
+      <div class="wrap metingen-grid">
+        <div>
+          <p class="kicker">Nieuw in 2026</p>
+          <h2>Drie metingen, elk met een eigen thema</h2>
+          <p class="section-intro" id="metingen-intro"></p>
+        </div>
+        <ol class="metingen" id="metingen"></ol>
+      </div>
+    </section>
+
+    <!-- 5. Stand van zaken -->
+    <section class="section" id="status">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="kicker">Stand van zaken <span class="js-meting-naam">meting 3</span></p>
+            <h2>Hier hebben we jou nog nodig</h2>
+            <p class="section-intro">Per markt hebben we een minimum aantal beoordelingen nodig om betrouwbare uitspraken te doen. Werk je met een serviceprovider in een markt die nog achterloopt? Dan telt jouw stem dubbel.</p>
+          </div>
+          <p class="updated" id="bijgewerkt"></p>
+        </div>
+        <div class="group-grid" id="groepen"></div>
+        <div class="center"><a class="btn js-cta" href="#">Start de vragenlijst</a></div>
+      </div>
+    </section>
+
+    <!-- 6. Eerdere resultaten -->
+    <section class="section section-dark" id="resultaten">
+      <div class="wrap">
+        <p class="kicker kicker-light">Eerdere resultaten</p>
+        <h2>Zo oordeelden adviseurs eerder</h2>
+        <div class="tabs" role="tablist" aria-label="Kies een meting of jaar" id="jaar-tabs"></div>
+        <div id="jaar-panel" role="tabpanel" class="year-panel"></div>
+      </div>
+    </section>
+
+    <!-- 7. Impact -->
+    <section class="section" id="impact">
+      <div class="wrap impact-grid">
+        <figure class="quote">
+          <blockquote id="impact-citaat"></blockquote>
+          <figcaption id="impact-bron"></figcaption>
+        </figure>
+        <div>
+          <p class="kicker">Wat er met jouw oordeel gebeurt</p>
+          <h2>Jouw oordeel komt aan</h2>
+          <ul class="impact-list" id="impact-punten"></ul>
+        </div>
+      </div>
+      <div class="wrap press" id="vakpers"></div>
+    </section>
+
+    <!-- 8. Vragen -->
+    <section class="section section-tint" id="vragen">
+      <div class="wrap narrow">
+        <p class="kicker">Veelgestelde vragen</p>
+        <h2>Goed om te weten</h2>
+        <div class="faq" id="faq"></div>
+      </div>
+    </section>
+
+    <!-- 9. Afsluiter -->
+    <section class="final-cta">
+      <div class="wrap final-inner">
+        <div>
+          <h2>Doe mee voor <span id="final-sluit"></span></h2>
+          <p>Het kost je ongeveer <span class="js-duur"></span> minuten en je weet daarna hoe de serviceproviders ervoor staan.</p>
+        </div>
+        <a class="btn btn-light js-cta" href="#">Start de vragenlijst</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <p><strong>DFO Onderzoek</strong> is onderdeel van Bureau DFO B.V. Het Serviceproviders-onderzoek wordt uitgevoerd in samenwerking met Atentikmarketing.</p>
+      <p>De Wel 14-16, 3871 MV Hoevelaken &middot; <a href="tel:+31332580460">033 – 258 04 60</a> &middot; <a href="mailto:info@dfobv.nl">info@dfobv.nl</a> &middot; <a href="https://www2.dfobv.nl">www2.dfobv.nl</a></p>
+      <p class="footer-small">KvK 32068727 &middot; <a href="#privacy-link-volgt">Privacyverklaring</a></p>
+    </div>
+  </footer>
+
+  <div class="sticky-cta" id="sticky-cta">
+    <a class="btn js-cta" href="#">Doe mee, <span class="js-duur"></span> minuten</a>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
