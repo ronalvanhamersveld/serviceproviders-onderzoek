@@ -97,7 +97,14 @@
   setHtml("#meetbalk", metingen.map(function (m, i) {
     return '<li class="' + esc(m.status) + '"><span class="nr" aria-hidden="true">' + (m.status === "afgerond" ? "&#10003;" : i + 1) + "</span>" +
       '<span class="tekst"><strong>' + esc(m.naam) + ": " + esc(m.thema) + "</strong><span>" + (STATUS[m.status] || esc(m.status)) +
-      (m.periode ? ", " + esc(m.periode) : "") + "</span></span></li>";
+      (m.periode ? ", " + esc(m.periode) : "") + "</span>" +
+      (m.samenvattingUrl
+        ? '<a class="meet-download" href="' + esc(pad(m.samenvattingUrl)) + '"' + extern(m.samenvattingUrl) + '><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download samenvatting</a>'
+        : "") +
+      (m.status === "open" && !gesloten
+        ? '<a class="btn btn-small meet-cta" href="' + esc(d.vragenlijstUrl) + '"' + extern(d.vragenlijstUrl) + ">Vul de vragenlijst in</a>"
+        : "") +
+      "</span></li>";
   }).join(""));
   if (!metingen.length) $("#meetbalk").hidden = true;
 
