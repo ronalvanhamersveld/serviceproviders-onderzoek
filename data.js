@@ -60,7 +60,7 @@ window.ONDERZOEK = {
     belang: 8.30,
     waardering: 6.66,
     tekst: "Adviseurs vinden meedenken belangrijk, maar serviceproviders scoren er gemiddeld een stuk lager op. Juist dit aspect bepaalt het sterkst of adviseurs een serviceprovider aanbevelen.",
-    bron: "Persbericht Bureau DFO, 15 oktober 2026 · 1.018 beoordelingen"
+    bron: "Meting 2, 2026 · persbericht en vakpaper Bureau DFO, oktober 2026"
   },
 
   // Kerncijfers bovenaan de pagina.
